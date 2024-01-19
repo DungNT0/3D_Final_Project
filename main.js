@@ -12,178 +12,177 @@ document.addEventListener("keydown", onKeyDown, false);
 const ARROWLEFT = 37, ARROWRIGHT = 39, ARROWUP = 38, ARROWDOWN = 40,
     W_FORWARD = 87, S_BACKWARD = 83, SPACEBAR = 32;
 
-const geometry1 = new THREE.TetrahedronGeometry(1, 0);
-const material1 = new THREE.MeshBasicMaterial({ color: 0xff0000 });
-const tetra = new THREE.Mesh(geometry1, material1);
-scene.add(tetra);
-tetra.position.x = -8;
-
-const geometry2 = new THREE.BoxGeometry(1, 1, 1);
-const crate_texture = new THREE.TextureLoader().load('public/Diffuse_Texture.png');
-const bump_map_texture = new THREE.TextureLoader().load('public/Bump_Texture.png');
-const normal_texture = new THREE.TextureLoader().load('public/Normal_Texture.png');
-
-const material2 = new THREE.MeshPhongMaterial({
-    map: crate_texture,
-    bumpMap: bump_map_texture,
-    normalMap: normal_texture
-});
-
-const crate = new THREE.Mesh(geometry2, material2);
-scene.add(crate);
-crate.position.x = -4;
-
 const ambientLight = new THREE.AmbientLight(0xffffff, 0.2);
 scene.add(ambientLight);
 
 const pointLight1 = new THREE.PointLight(0xffffff, 0.8, 100.0);
-pointLight1.position.set(-3.1, 0.3, 1.5)
+pointLight1.position.set(-3.1, 0.3, 315);
 scene.add(pointLight1);
 
-const geometry3 = new THREE.CapsuleGeometry(1, 0.1, 5, 25);
-const material3 = new THREE.MeshBasicMaterial({ color: 0x008000 });
-const capsule = new THREE.Mesh(geometry3, material3);
-scene.add(capsule);
-capsule.position.x = 0;
+const geometry1 = new THREE.SphereGeometry(1, 64, 32);
+const material1 = new THREE.MeshBasicMaterial({ color: 0x4bb6d1 });
+const orb = new THREE.Mesh(geometry1, material1);
+orb.position.z = 315;
+scene.add(orb);
 
-const geometry4 = new THREE.ConeGeometry(1, 5, 32);
-const material4 = new THREE.MeshBasicMaterial({ color: 0xffff00 });
-const cone = new THREE.Mesh(geometry4, material4);
-scene.add(cone);
-cone.position.x = 4;
+const geometry2 = new THREE.CylinderGeometry(1, 5, 2, 64);
+const material2 = new THREE.MeshBasicMaterial({ color: 0xdeddd3 });
+const ufo_top = new THREE.Mesh(geometry2, material2);
+ufo_top.position.z = 315;
+ufo_top.position.y = -1;
+scene.add(ufo_top);
 
-const geometry5 = new THREE.DodecahedronGeometry(1, 0);
-const material5 = new THREE.MeshBasicMaterial({ color: 0x008000 });
-const dode = new THREE.Mesh(geometry5, material5);
-scene.add(dode);
-dode.position.x = 8;
-
-// scene.background = new THREE.TextureLoader().load('public/justright.jpg');
-
-const geometry6 = new THREE.BoxGeometry(32, 0.1, 32);
-const grass_diffuse_texture = new THREE.TextureLoader().load('public/grass_diffus_texture.png');
-const grass_normal_texture = new THREE.TextureLoader().load('public/grass_normal_texture.png');
-const grass_disp_texture = new THREE.TextureLoader().load('public/grass_displacement_texture.png');
-const grass_specular_texture = new THREE.TextureLoader().load('public/grass_specular_texture.png');
-const material6 = new THREE.MeshPhongMaterial({
-    map: grass_diffuse_texture,
-    normalMap: grass_normal_texture,
-    displacementMap: grass_disp_texture,
-    specularMap: grass_specular_texture,
-    specular: 0xffffff, shininess: 20
-});
-
-const ground = new THREE.Mesh(geometry6, material6);
-ground.position.z = -3;
-ground.position.y = -4;
-ground.position.x = 0;
-scene.add(ground);
+const geometry3 = new THREE.CylinderGeometry(5, 1, 1, 64);
+const material3 = new THREE.MeshBasicMaterial({ color: 0xdeddd3 });
+const ufo_bottom = new THREE.Mesh(geometry3, material3);
+ufo_bottom.position.z = 315;
+ufo_bottom.position.y = -2.5;
+scene.add(ufo_bottom);
 
 const camera = new THREE.PerspectiveCamera(40, window.innerWidth / window.innerHeight, 1, 100);
-camera.position.set(0, 0, 12);
+camera.position.set(0, 0, 340);
 
 const controls = new OrbitControls(camera, renderer.domElement);
-controls.target.set(0, 0.5, 0);
+controls.target.set(0, 0, 315);
 controls.update();
 controls.enablePan = false;
 controls.enableDamping = true;
 
-function animate() {
-    requestAnimationFrame(animate);
-    tetra.rotation.x += 0.01;
-    tetra.rotation.y += 0.01;
+const geometry4 = new THREE.SphereGeometry(300, 300, 300);
+const loader = new THREE.CubeTextureLoader();
+loader.setPath('public/skybox/');
+const texture_cube = loader.load([
+    'space_ft.png', 'space_bk.png', 'space_up.png',
+    'space_dn.png', 'space_rt.png', 'space_lf.png'
+]);
+const material4 = new THREE.MeshBasicMaterial({ color: 0xffffff, envMap: texture_cube });
+const sphere = new THREE.Mesh(geometry4, material4);
+scene.add(sphere);
 
-    crate.rotation.x += 0.01;
-    crate.rotation.y += 0.01;
+const geometry5 = new THREE.SphereGeometry(300, 300, 300);
+const loader2 = new THREE.CubeTextureLoader();
+loader2.setPath('public/skybox/');
+const texture_cube2 = loader2.load([
+    'space_ft.png', 'space_bk.png', 'space_up.png',
+    'space_dn.png', 'space_rt.png', 'space_lf.png'
+]);
+const material5 = new THREE.MeshBasicMaterial({ color: 0xffffff, envMap: texture_cube2 });
+const sphere2 = new THREE.Mesh(geometry5, material5);
+scene.add(sphere2);
+sphere2.position.x = 350;
+sphere2.position.z = 350;
 
-    capsule.rotation.x += 0.01;
-    capsule.rotation.y += 0.01;
+const geometry6 = new THREE.SphereGeometry(300, 300, 300);
+const loader3 = new THREE.CubeTextureLoader();
+loader3.setPath('public/skybox/');
+const texture_cube3 = loader3.load([
+    'space_ft.png', 'space_bk.png', 'space_up.png',
+    'space_dn.png', 'space_rt.png', 'space_lf.png'
+]);
+const material6 = new THREE.MeshBasicMaterial({ color: 0xffffff, envMap: texture_cube3 });
+const sphere3 = new THREE.Mesh(geometry6, material6);
+scene.add(sphere3);
+sphere3.position.x = -350;
+sphere3.position.z = 350;
 
-    cone.rotation.x += 0.01;
-    cone.rotation.y += 0.01;
+const geometry7 = new THREE.SphereGeometry(300, 300, 300);
+const loader4 = new THREE.CubeTextureLoader();
+loader4.setPath('public/skybox/');
+const texture_cube4 = loader4.load([
+    'space_ft.png', 'space_bk.png', 'space_up.png',
+    'space_dn.png', 'space_rt.png', 'space_lf.png'
+]);
+const material7 = new THREE.MeshBasicMaterial({ color: 0xffffff, envMap: texture_cube4 });
+const sphere4 = new THREE.Mesh(geometry7, material7);
+scene.add(sphere4);
+sphere4.position.z = 640;
 
-    dode.rotation.x += 0.01;
-    dode.rotation.y += 0.01;
+const geometry8 = new THREE.SphereGeometry(300, 300, 300);
+const loader5 = new THREE.CubeTextureLoader();
+loader5.setPath('public/skybox/');
+const texture_cube5 = loader5.load([
+    'space_ft.png', 'space_bk.png', 'space_up.png',
+    'space_dn.png', 'space_rt.png', 'space_lf.png'
+]);
+const material8 = new THREE.MeshBasicMaterial({ color: 0xffffff, envMap: texture_cube5 });
+const sphere5 = new THREE.Mesh(geometry8, material8);
+scene.add(sphere5);
+sphere5.position.y = 350;
+sphere5.position.z = 350;
 
-    controls.update();
-
-    renderer.render(scene, camera);
-}
-animate();
+const geometry9 = new THREE.SphereGeometry(300, 300, 300);
+const loader6 = new THREE.CubeTextureLoader();
+loader6.setPath('public/skybox/');
+const texture_cube6 = loader6.load([
+    'space_ft.png', 'space_bk.png', 'space_up.png',
+    'space_dn.png', 'space_rt.png', 'space_lf.png'
+]);
+const material9 = new THREE.MeshBasicMaterial({ color: 0xffffff, envMap: texture_cube6 });
+const sphere6 = new THREE.Mesh(geometry9, material9);
+scene.add(sphere6);
+sphere6.position.y = -350;
+sphere6.position.z = 350;
 
 function onKeyDown(e) {
     console.log("The current key:" + e.keyCode);
     switch (e.keyCode) {
         case ARROWLEFT:
-            tetra.position.x += -0.2;
-            crate.position.x += -0.2;
-            capsule.position.x += -0.2;
-            cone.position.x += -0.2;
-            dode.position.x += -0.2;
+            orb.position.x += -0.2;
+            ufo_top.position.x += -0.2;
+            ufo_bottom.position.x += -0.2;
+            controls.target.x += -0.2;
             break;
 
         case ARROWRIGHT:
-            tetra.position.x += 0.2;
-            crate.position.x += 0.2;
-            capsule.position.x += 0.2;
-            cone.position.x += 0.2;
-            dode.position.x += 0.2;
+            orb.position.x += 0.2;
+            ufo_top.position.x += 0.2;
+            ufo_bottom.position.x += 0.2;
+            controls.target.x += 0.2;
             break;
 
         case ARROWUP:
-            tetra.position.y += 0.2;
-            crate.position.y += 0.2;
-            capsule.position.y += 0.2;
-            cone.position.y += 0.2;
-            dode.position.y += 0.2;
+            orb.position.y += 0.2;
+            ufo_top.position.y += 0.2;
+            ufo_bottom.position.y += 0.2;
+            controls.target.y += 0.2;
             break;
 
         case ARROWDOWN:
-            tetra.position.y += -0.2;
-            crate.position.y += -0.2;
-            capsule.position.y += -0.2;
-            cone.position.y += -0.2;
-            dode.position.y += -0.2;
+            orb.position.y += -0.2;
+            ufo_top.position.y += -0.2;
+            ufo_bottom.position.y += -0.2;
+            controls.target.y += -0.2;
             break;
 
         case W_FORWARD:
-            tetra.position.z += 0.2;
-            crate.position.z += 0.2;
-            capsule.position.z += 0.2;
-            cone.position.z += 0.2;
-            dode.position.z += 0.2;
+            orb.position.z += 0.2;
+            ufo_top.position.z += 0.2;
+            ufo_bottom.position.z += 0.2;
+            controls.target.z += 0.2;
             break;
 
         case S_BACKWARD:
-            tetra.position.z += -0.2;
-            crate.position.z += -0.2;
-            capsule.position.z += -0.2;
-            cone.position.z += -0.2;
-            dode.position.z += -0.2;
+            orb.position.z += -0.2;
+            ufo_top.position.z += -0.2;
+            ufo_bottom.position.z += -0.2;
+            controls.target.z += -0.2;
             break;
 
         case SPACEBAR:
-            tetra.position.x = -8;
-            tetra.position.y = 0;
-            tetra.position.z = 0;
+            orb.position.x = 0;
+            orb.position.y = 0;
+            orb.position.z = 315;
 
-            crate.position.x = -4;
-            crate.position.y = 0;
-            crate.position.z = 0;
+            ufo_top.position.x = 0;
+            ufo_top.position.y = -1;
+            ufo_top.position.z = 315;
 
-            capsule.position.x = 0;
-            capsule.position.y = 0;
-            capsule.position.z = 0;
+            ufo_bottom.position.x = 0;
+            ufo_bottom.position.y = -2.5;
+            ufo_bottom.position.z = 315;
 
-            cone.position.x = 4;
-            cone.position.y = 0;
-            cone.position.z = 0;
-
-            dode.position.x = 8;
-            dode.position.y = 0;
-            dode.position.z = 0;
-
-            camera.position.set(0, 0, 12);
+            camera.position.set(0, 0, 340);
+            controls.target.set(0, 0, 315);
             break;
 
         default:
@@ -191,3 +190,18 @@ function onKeyDown(e) {
     }
 }
 
+function animate() {
+    requestAnimationFrame(animate);
+
+    orb.rotation.x += 0.01;
+    orb.rotation.y += 0.01;
+
+    ufo_top.rotation.y += 0.01;
+
+    ufo_bottom.rotation.y += 0.01;
+
+    controls.update();
+
+    renderer.render(scene, camera);
+}
+animate();
