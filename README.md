@@ -6,5 +6,6 @@ arrowup = up;
 w = forward;
 s = backward;
 spacebar = reset;
+added planets and audio
 
 
