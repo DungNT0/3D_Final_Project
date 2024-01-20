@@ -12,11 +12,11 @@ document.addEventListener("keydown", onKeyDown, false);
 const ARROWLEFT = 37, ARROWRIGHT = 39, ARROWUP = 38, ARROWDOWN = 40,
     W_FORWARD = 87, S_BACKWARD = 83, SPACEBAR = 32;
 
-const ambientLight = new THREE.AmbientLight(0xffffff, 0.2);
+const ambientLight = new THREE.AmbientLight(0xfcba03, 1);
 scene.add(ambientLight);
 
-const pointLight1 = new THREE.PointLight(0xffffff, 0.8, 100.0);
-pointLight1.position.set(-3.1, 0.3, 315);
+const pointLight1 = new THREE.PointLight(0xfcba03, 10, 0);
+pointLight1.position.set(40, 50, 315);
 scene.add(pointLight1);
 
 const geometry1 = new THREE.SphereGeometry(1, 64, 32);
@@ -123,6 +123,54 @@ scene.add(sphere6);
 sphere6.position.y = -350;
 sphere6.position.z = 350;
 
+const geometry10 = new THREE.SphereGeometry(15, 300, 300);
+const texture_cube7 = new THREE.TextureLoader().load('public/2k_venus_surface.jpg');
+const material10 = new THREE.MeshBasicMaterial({ color: 0xfcba03, aoMap: texture_cube7 });
+const sphere7 = new THREE.Mesh(geometry10, material10);
+scene.add(sphere7);
+sphere7.position.x = 40;
+sphere7.position.z = 315;
+
+const geometry11 = new THREE.SphereGeometry(15, 300, 300);
+const texture_cube8 = new THREE.TextureLoader().load('public/2k_venus_atmosphere.jpg');
+const material11 = new THREE.MeshBasicMaterial({ color: 0xffffff, aoMap: texture_cube8 });
+const sphere8 = new THREE.Mesh(geometry11, material11);
+scene.add(sphere8);
+sphere8.position.x = -50;
+sphere8.position.z = 315;
+
+const geometry12 = new THREE.SphereGeometry(10, 300, 300);
+const texture_cube9 = new THREE.TextureLoader().load('public/2k_jupiter.jpg');
+const material12 = new THREE.MeshBasicMaterial({ color: 0xbdeb34, aoMap: texture_cube9 });
+const sphere9 = new THREE.Mesh(geometry12, material12);
+scene.add(sphere9);
+sphere9.position.y = -40;
+sphere9.position.z = 315;
+
+const geometry13 = new THREE.SphereGeometry(10, 300, 300);
+const texture_cube10 = new THREE.TextureLoader().load('public/2k_saturn.jpg');
+const material13 = new THREE.MeshBasicMaterial({ color: 0x44b391, aoMap: texture_cube10 });
+const sphere10 = new THREE.Mesh(geometry13, material13);
+scene.add(sphere10);
+sphere10.position.y = 40;
+sphere10.position.z = 315;
+
+const listener = new THREE.AudioListener();
+camera.add( listener );
+
+// create a global audio source
+const sound = new THREE.Audio( listener );
+
+// load a sound and set it as the Audio object's buffer
+const audioLoader = new THREE.AudioLoader();
+audioLoader.load( 'public/sounds/castoria.mp4', function( buffer ) {
+	sound.setBuffer( buffer );
+	sound.setLoop( true );
+	sound.setVolume( 2 );
+	sound.play();
+
+});
+
 function onKeyDown(e) {
     console.log("The current key:" + e.keyCode);
     switch (e.keyCode) {
@@ -199,6 +247,14 @@ function animate() {
     ufo_top.rotation.y += 0.01;
 
     ufo_bottom.rotation.y += 0.01;
+
+    sphere7.rotation.y += 0.01;
+
+    sphere8.rotation.y += 0.01;
+
+    sphere9.rotation.y += 0.01;
+
+    sphere10.rotation.y += 0.01;
 
     controls.update();
 
