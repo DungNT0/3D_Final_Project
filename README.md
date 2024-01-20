@@ -6,6 +6,9 @@ arrowup = up;
 w = forward;
 s = backward;
 spacebar = reset;
+audio plays automatically
+click on M button to mute
+double click on M button to play
 added planets and audio
 
 
