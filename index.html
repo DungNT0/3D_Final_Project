@@ -3,10 +3,23 @@
 
 <head>
   <meta charset="utf-8">
+  <link rel="shortcut icon" href="#">
+
   <title>3D Programming Final</title>
   <style>
     body {
       margin: 0;
+    }
+
+    audio {
+      position: absolute;
+      display: none;
+    }
+
+    button {
+      position: absolute;
+      height: 30px;
+      width: 30px;
     }
   </style>
 
@@ -18,12 +31,30 @@
       }
     }
    </script>
-
 </head>
 
 <body>
-    <script src="https://cross-origin.com/myvideo.html" allow="autoplay"></script>
-    <script type="module" src="/main.js"></script>
+  <audio src="public/sounds/castoria.mp4" controls loop autoplay>
+    <source>
+  </audio>
+
+  <button onclick="pauseVid()" ondblclick="playVid()" id="unmuteButton" type="button">M</button>
+
+  <script type="module" src="/main.js">
+
+  </script>
+
+  <script>
+    let vid = document.querySelector('audio');
+    function pauseVid() {
+      vid.pause();
+    }
+
+    function playVid() {
+      vid.play();
+    }
+  </script>
+
 </body>
 
 </html>

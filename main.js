@@ -155,22 +155,6 @@ scene.add(sphere10);
 sphere10.position.y = 40;
 sphere10.position.z = 315;
 
-const listener = new THREE.AudioListener();
-camera.add( listener );
-
-// create a global audio source
-const sound = new THREE.Audio( listener );
-
-// load a sound and set it as the Audio object's buffer
-const audioLoader = new THREE.AudioLoader();
-audioLoader.load( 'public/sounds/castoria.mp4', function( buffer ) {
-	sound.setBuffer( buffer );
-	sound.setLoop( true );
-	sound.setVolume( 2 );
-	sound.play();
-
-});
-
 function onKeyDown(e) {
     console.log("The current key:" + e.keyCode);
     switch (e.keyCode) {
